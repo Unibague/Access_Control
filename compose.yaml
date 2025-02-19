@@ -1,32 +1,25 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:16
-    container_name: postgres_container
+  mongo:
+    image: mongo:6
+    container_name: mongo_container
     restart: always
-    environment:
-      POSTGRES_DB: access_control
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
     ports:
-      - "5433:5432"
+      - "27018:27017"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
+      - mongo_data:/data/db
 
   app:
     build: .
     container_name: springboot_app
     depends_on:
-      - db
+      - mongo
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/access_control
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/access_control
     restart: always
 
 volumes:
-  postgres_data:
+  mongo_data:

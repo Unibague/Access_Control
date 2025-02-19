@@ -32,7 +32,7 @@ public class UserService {
      * @param id The ID of the user.
      * @return Optional user entity.
      */
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> getUserById(String id) { // ✅ Cambiado de Long a String
         return userRepository.findById(id);
     }
 
@@ -53,7 +53,7 @@ public class UserService {
      * @param userDetails Updated user data.
      * @return Updated user entity.
      */
-    public User updateUser(Long id, User userDetails) {
+    public User updateUser(String id, User userDetails) { // ✅ Cambiado de Long a String
         return userRepository.findById(id).map(user -> {
             user.setUsername(userDetails.getUsername());
             user.setPassword(userDetails.getPassword());
@@ -66,7 +66,7 @@ public class UserService {
      *
      * @param id The ID of the user to delete.
      */
-    public void deleteUser(Long id) {
+    public void deleteUser(String id) { // ✅ Cambiado de Long a String
         userRepository.deleteById(id);
     }
 }
